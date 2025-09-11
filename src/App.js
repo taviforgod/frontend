@@ -1,124 +1,75 @@
-import React, { useContext } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { AuthProvider, AuthContext } from "./contexts/AuthContext";
-import { ThemeProviderCustom, ThemeContext } from "./contexts/ThemeContext";
+// FILE: app.js
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-import Login from "./pages/Auth/Login";
-import Register from "./pages/Auth/Register";
-import ForgotPassword from "./pages/Auth/ForgotPassword";
-import ResetPassword from "./pages/Auth/ResetPassword";
-import Onboard from "./pages/Auth/Onboard";
-import PhoneVerification from "./pages/Auth/PhoneVerification";
 
-import Profile from "./pages/RBAC/Profile";
-import Users from "./pages/RBAC/Users";
-import Roles from "./pages/RBAC/Roles";
-import Permissions from "./pages/RBAC/Permissions";
-import RBACMatrix from "./pages/RBAC/RBACMatrix";
-import UserRoleMatrix from "./pages/RBAC/UserRoleMatrix";
+// routes (same names as your project)
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import roleRoutes from './routes/roleRoutes.js';
+import permissionRoutes from './routes/permissionRoutes.js';
+import memberRoutes from './routes/memberRoutes.js';
+import lookupRoutes from './routes/lookupRoutes.js';
+import milestoneRecordRoutes from './routes/milestoneRecords.js';
+import milestoneTemplateRoutes from './routes/milestoneTemplates.js';
+import cellModuleRoutes from './routes/cellModuleRoutes.js';
+import nameSafeRoutes from './routes/nameSafeRoutes.js';
+import messageboardRoutes from './routes/messageboardRoutes.js';
+import notificationsRoutes from './routes/notifications.js';
+import foundationRouter from './routes/foundation.js';
+import mentorshipRouter from './routes/mentorship.js';
 
-import MembersPage from "./pages/MemberPage";
 
-import Layout from "./Layout";
-import Header from "./Shared/Header";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-import LookupsPage from "./pages/Settings/LookupsPage";
 
-import CellGroupList from "./components/CellGroupList";
-import WeeklyReports from "./components/WeeklyReports";
-import HealthDashboard from "./components/HealthDashboard";
-import StatusTypesPage from "./components/StatusTypesPage";
-import ZonesPage from "./components/ZonesPage";
-import VisitorsPage from "./components/VisitorsPage";
+const app = express();
 
-/* --- UPDATED imports: use the new components provided in the Notifications module ZIP --- */
-import NotificationsPage from "./components/NotificationsPage";      // new notifications list page
-import MessageBoardPage from "./components/MessageBoardPage";       // message board UI
-import MilestoneTemplates from "./components/spiritual/MilestoneTemplates";
-import GrowthDashboard from "./components/spiritual/GrowthDashboard";
-import RoleBasedDashboard from "./pages/RoleBasedDashboard";
 
-function ProtectedRoute({ children }) {
-  const { user } = useContext(AuthContext);
-  return user ? children : <Navigate to="/login" />;
+// Trust proxy when running behind a reverse proxy (Heroku, Render, Vercel, etc.)
+// This is important so Express can detect `req.secure` and allow `secure` cookies to be set.
+if (process.env.TRUST_PROXY === 'true' || process.env.NODE_ENV === 'production') {
+app.set('trust proxy', 1);
 }
 
-function AppWithTheme() {
-  const { theme } = useContext(ThemeContext);
 
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AuthProvider>
-        <Router>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/onboard" element={<Onboard />} />
-            <Route path="/verify-phone" element={<PhoneVerification />} />
+// Configure CORS with explicit origin and credentials support
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'https://frontend-jvvi.onrender.com';
 
-            {/* Protected routes */}
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Header />
-                  <Layout />
-                </ProtectedRoute>
-              }
-            >
-              <Route path="dashboard" element={<RoleBasedDashboard />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="users" element={<Users />} />
-              <Route path="roles" element={<Roles />} />
-              <Route path="permissions" element={<Permissions />} />
-              <Route path="rbac-matrix" element={<RBACMatrix />} />
-              <Route path="user-role-matrix" element={<UserRoleMatrix />} />
-              <Route path="members" element={<MembersPage />} />
-              <Route path="lookups" element={<LookupsPage />} />
-              <Route path="cell-groups" element={<CellGroupList />} />
-              <Route path="weekly-reports" element={<WeeklyReports />} />
-              <Route path="health-dashboard" element={<HealthDashboard />} />
 
-              {/* UPDATED: notifications & messageboard use the new components */}
-              <Route path="notifications" element={<NotificationsPage />} />
-              <Route path="message-board" element={<MessageBoardPage />} />
+app.use(cors({
+origin: (origin, callback) => {
+// allow requests with no origin (mobile apps, curl) or the configured frontend origin
+if (!origin) return callback(null, true);
+if (origin === FRONTEND_ORIGIN) return callback(null, true);
+return callback(new Error('CORS origin denied'), false);
+},
+credentials: true,
+}));
 
-              <Route path="visitors" element={<VisitorsPage />} />
-              <Route path="status-types" element={<StatusTypesPage />} />
-              <Route path="zones" element={<ZonesPage />} />
-              
-              <Route path="spiritual/milestones" element={<MilestoneTemplates />} />
-              <Route path="spiritual/dashboard" element={<GrowthDashboard />} />
 
-              {/* Default route */}
-              <Route index element={<Navigate to="dashboard" replace />} />
-              <Route path="*" element={<Navigate to="dashboard" replace />} />
-            </Route>
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <RoleBasedDashboard />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </ThemeProvider>
-  );
-}
 
-export default function App() {
-  return (
-    <ThemeProviderCustom>
-      <AppWithTheme />
-    </ThemeProviderCustom>
-  );
-}
+// Serve uploaded files (profile photos, csvs etc.) in a web-accessible folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// --- API routes ---
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/roles', roleRoutes);
+app.use('/api/permissions', permissionRoutes);
+app.use('/api/members', memberRoutes);
+app.use('/api/lookups', lookupRoutes);
+app.use('/api/milestone-records', milestoneRecordRoutes);
+app.use('/api/milestone-templates', milestoneTemplateRoutes);
+app.use('/api/cell-groups', cellModuleRoutes);
+app.use('/api/name-safe', nameSafeRoutes);
+export default app;
