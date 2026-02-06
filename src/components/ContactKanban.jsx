@@ -22,7 +22,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { format } from "date-fns";
+import { DateTime } from "luxon";
 import { listContacts, updateContactStatus } from "../services/evangelismService";
 import { MoreHorizontal, Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import { AuthContext } from "../contexts/AuthContext"; 
@@ -42,7 +42,9 @@ function getInitials(first, last) {
 function formatLastContact(dateStr) {
   if (!dateStr) return "Never";
   try {
-    return format(new Date(dateStr), "MMM d, yyyy");
+    const dt = DateTime.fromJSDate(new Date(dateStr));
+    if (!dt.isValid) return dateStr;
+    return dt.toFormat("MMM d, yyyy");
   } catch {
     return dateStr;
   }
