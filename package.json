@@ -1,4 +1,4 @@
-{
+v{
   "name": "multi-booking-frontend",
   "version": "1.0.0",
   "private": true,
@@ -43,6 +43,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy-render": "rm -rf node_modules package-lock.json && npm install --legacy-peer-deps && npm run build",
     "test": "react-scripts test --env=jsdom --watchAll=false"
   },
   "browserslist": {
@@ -69,5 +70,9 @@
     "extends": [
       "react-app"
     ]
+  },
+  "resolutions": {
+    "ajv": "8.12.0",
+    "ajv-keywords": "5.1.0"
   }
 }
