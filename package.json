@@ -13,7 +13,6 @@
     "@mui/x-data-grid-pro": "^6.20.0",
     "@mui/x-date-pickers": "^6.20.2",
     "@mui/x-date-pickers-pro": "^6.20.2",
-    "@mui/x-date-pickers-pro-luxon-adapter": "^6.20.2",
     "dayjs": "^1.11.18",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
@@ -46,6 +45,13 @@
     "deploy-render": "rm -rf node_modules package-lock.json && npm install --legacy-peer-deps && npm run build",
     "test": "react-scripts test --env=jsdom --watchAll=false"
   },
+  "resolutions": {
+    "ajv": "8.12.0",
+    "ajv-keywords": "5.1.0"
+  },
+  "engines": {
+    "node": "22.x"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -65,12 +71,5 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "patch-package": "^8.0.1",
     "postinstall-postinstall": "^2.1.0"
-  },
-  "resolutions": {
-    "ajv": "8.12.0",
-    "ajv-keywords": "5.1.0"
-  },
-  "engines": {
-    "node": "22.x"
   }
 }
