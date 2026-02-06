@@ -5,16 +5,13 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
-
     "@mui/material": "^5.15.15",
     "@mui/system": "^5.15.15",
     "@mui/icons-material": "^5.15.15",
-
     "@mui/x-data-grid": "6.17.0",
     "@mui/x-data-grid-pro": "6.17.0",
     "@mui/x-date-pickers": "6.17.0",
     "@mui/x-date-pickers-pro": "6.17.0",
-
     "@hello-pangea/dnd": "^18.0.1",
     "dayjs": "^1.11.18",
     "exceljs": "^4.4.0",
@@ -48,6 +45,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --watchAll=false"
+  },
+  "overrides": {
+    "ajv": "6.12.6",
+    "ajv-keywords": "3.5.2"
   },
   "browserslist": {
     "production": [
