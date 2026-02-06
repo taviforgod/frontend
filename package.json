@@ -63,7 +63,8 @@
     "@testing-library/user-event": "^14.6.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "patch-package": "^8.0.1",
-    "postinstall-postinstall": "^2.1.0"
+    "postinstall-postinstall": "^2.1.0",
+    "baseline-browser-mapping": "^1.4.0"
   },
   "eslintConfig": {
     "extends": [
