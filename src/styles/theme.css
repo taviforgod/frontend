@@ -1,0 +1,40 @@
+/* src/styles/theme.css - Elegant theme variables (light + dark) */
+:root {
+  --background: #ffffff;
+  --foreground: #030213;
+  --muted-foreground: #717182;
+  --primary: #030213;
+  --accent: #e9ebef;
+  --accent-2: #06b6d4;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --destructive: #d4183d;
+  --input-background: #f3f3f5;
+  --muted: #ececf0;
+  --card-shadow: 0 4px 12px rgba(2, 2, 10, 0.06);
+}
+
+.dark {
+  --background: #04282A;
+  --foreground: #E6EEF0;
+  --muted-foreground: #93c5fd;
+  --primary: #E6EEF0;
+  --accent: #06b6d4;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --destructive: #f87171;
+  --input-background: #021617;
+  --muted: #06282a;
+  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* @theme mapping block (optional reference for MUI mapping tools) */
+/* @theme
+  primary: --primary
+  accent: --accent
+  success: --success
+  warning: --warning
+  error: --destructive
+  background: --background
+  foreground: --foreground
+*/
