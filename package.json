@@ -2,26 +2,21 @@
   "name": "multi-booking-frontend",
   "version": "1.0.0",
   "private": true,
-
-  "engines": {
-    "node": ">=20 <=22"
-  },
-
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
 
-    "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@mui/system": "^5.15.15",
+    "@mui/icons-material": "^5.15.15",
 
-    "@mui/x-data-grid": "6.19.0",
-    "@mui/x-data-grid-pro": "6.19.0",
-    "@mui/x-date-pickers": "6.19.0",
-    "@mui/x-date-pickers-pro": "6.19.0",
+    "@mui/x-data-grid": "6.17.0",
+    "@mui/x-data-grid-pro": "6.17.0",
+    "@mui/x-date-pickers": "6.17.0",
+    "@mui/x-date-pickers-pro": "6.17.0",
 
     "@hello-pangea/dnd": "^18.0.1",
-
+    "dayjs": "^1.11.18",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "framer-motion": "^12.23.18",
@@ -31,11 +26,10 @@
     "jspdf-autotable": "^5.0.2",
     "konva": "^9.3.20",
     "lucide-react": "^0.525.0",
-
     "luxon": "^3.7.2",
-
     "papaparse": "^5.5.3",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.62.0",
     "react-leaflet": "^4.2.1",
@@ -48,16 +42,13 @@
     "web-vitals": "^5.0.3",
     "xlsx": "^0.18.5",
     "yup": "^1.7.0",
-
     "leaflet": "^1.9.4"
   },
-
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --watchAll=false"
   },
-
   "browserslist": {
     "production": [
       ">0.2%",
@@ -70,7 +61,6 @@
       "last 1 safari version"
     ]
   },
-
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^14.3.1",
@@ -79,8 +69,9 @@
     "patch-package": "^8.0.1",
     "postinstall-postinstall": "^2.1.0"
   },
-
   "eslintConfig": {
-    "extends": ["react-app"]
+    "extends": [
+      "react-app"
+    ]
   }
 }
